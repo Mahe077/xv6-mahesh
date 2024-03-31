@@ -89,3 +89,13 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+int
+sys_getyear(void){
+  return 1975;
+}
+
+int
+sys_getmysize(void){
+  return myproc()->sz;
+}
