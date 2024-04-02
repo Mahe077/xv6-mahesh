@@ -11,6 +11,7 @@ int
 main(void)
 {
   int pid, wpid;
+  int pid2;
 
   if(open("console", O_RDWR) < 0){
     mknod("console", 1, 1);
@@ -22,8 +23,14 @@ main(void)
   for(;;){
     printf(1, "init: starting sh\n");
     pid = fork();
-    if(pid < 0){
+    pid2 = fork();
+    if(pid < 0 || pid2 < 0){
       printf(1, "init: fork failed\n");
+      exit();
+    }
+    if(pid2 == 0){
+      exec("demon", argv);
+      printf(1, "init: exec demon failed\n");
       exit();
     }
     if(pid == 0){
